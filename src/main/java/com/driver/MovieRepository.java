@@ -61,7 +61,6 @@ public class MovieRepository {
         return new ResponseEntity<>(temp,HttpStatus.OK);
     }
 
-
     public ResponseEntity<String> deleteDirectorByName( String name){
         movieAnddirector.remove(name);
         return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
