@@ -48,8 +48,8 @@ public class MovieRepository {
     }
 
 
-    public ResponseEntity<Director> getMoviesByDirectorName(String name){
-        return new ResponseEntity<>(directordb.get(name),HttpStatus.OK);
+    public ResponseEntity<List<String>> getMoviesByDirectorName(String name){
+        return new ResponseEntity<>(movieAnddirector.get(name),HttpStatus.OK);
     }
 
 

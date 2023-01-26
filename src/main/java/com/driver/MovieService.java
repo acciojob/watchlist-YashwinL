@@ -45,7 +45,7 @@ public class MovieService {
     }
 
 
-    public ResponseEntity<Director> getMoviesByDirectorName( String name){
+    public ResponseEntity<List<String>> getMoviesByDirectorName( String name){
        return movieRepository.getMoviesByDirectorName(name);
     }
 
