@@ -57,5 +57,4 @@ public class MovieController {
     public ResponseEntity<String> deleteAllDirectors(){
        return movieService.deleteAllDirectors();
     }
-
 }
