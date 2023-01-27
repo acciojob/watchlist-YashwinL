@@ -13,17 +13,29 @@ import java.util.List;
 @Repository
 public class MovieRepository {
 
-    HashMap<String,Movie> moviesdb = new HashMap<>();
-    HashMap<String,Director> directordb = new HashMap<>();
-    HashMap<String, List<String>> movieAnddirector = new HashMap<>();
+    HashMap<String,Movie> moviesdb;
+    HashMap<String,Director> directordb;
+    HashMap<String, List<String>> movieAnddirector;
+
+    public MovieRepository(){
+        this.moviesdb = new HashMap<>();
+        this.directordb = new HashMap<>();
+        this.movieAnddirector = new HashMap<>();
+    }
 
 
     public ResponseEntity<String> addMovie(@RequestBody Movie movie){
-       moviesdb.put(movie.getName(),movie);
+        if(!moviesdb.containsKey(movie.getName())){
+            moviesdb.put(movie.getName(),movie);
+        }
+
        return new ResponseEntity<>("Movie added Successfully", HttpStatus.OK);
     }
     public ResponseEntity<String> addDirector(@RequestBody Director director){
-        directordb.put(director.getName(),director);
+        if(!directordb.containsKey(director.getName())){
+            directordb.put(director.getName(),director);
+        }
+
         return new ResponseEntity<>("Director added Successfully",HttpStatus.OK);
     }
 
@@ -83,9 +95,7 @@ public class MovieRepository {
                 moviesdb.remove(temp.get(i));
             }
         }
-        if(directordb.containsKey(name)){
-            directordb.remove(name);
-        }
+        directordb.remove(name);
         if(movieAnddirector.containsKey(name)){
             movieAnddirector.remove(name);
             return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
@@ -94,7 +104,6 @@ public class MovieRepository {
 
 
     }
-
 
     public ResponseEntity<String> deleteAllDirectors(){
         directordb.clear();
