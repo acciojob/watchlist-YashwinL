@@ -41,11 +41,13 @@ public class MovieRepository {
 
 
     public ResponseEntity<String> addMovieDirectorPair( String movie, String director){
-        if(!moviesdb.containsKey(movie) && !directordb.containsKey(director)){
-            return new ResponseEntity<>("Movie or Director does not present in database ",HttpStatus.NOT_FOUND);
+        if(!moviesdb.containsKey(movie) || !directordb.containsKey(director)){
+            return new ResponseEntity<>("Movie or Director does not present in database ",HttpStatus.FOUND);
         }
         if(!movieAnddirector.containsKey(director)){
-            movieAnddirector.put(director,new ArrayList<String>());
+            List<String> lis = new ArrayList<>();
+            lis.add(movie);
+            movieAnddirector.put(director,lis);
             return new ResponseEntity<>("Movie and Director pair created Successfully",HttpStatus.CREATED);
         }
         movieAnddirector.get(director).add(movie);
