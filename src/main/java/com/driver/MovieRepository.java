@@ -106,8 +106,18 @@ public class MovieRepository {
     }
 
     public ResponseEntity<String> deleteAllDirectors(){
-        directordb.clear();
-        movieAnddirector.clear();
+        for(String name : movieAnddirector.keySet()){
+            List<String> movielist = movieAnddirector.get(name);
+            for(String lis : movielist){
+                if(moviesdb.containsKey(lis)){
+                    moviesdb.remove(lis);
+                }
+            }
+            directordb.remove(name);
+        }
+        for(String in : directordb.keySet()){
+            directordb.remove(in);
+        }
         return new ResponseEntity<>("Cleared All",HttpStatus.OK);
     }
 
