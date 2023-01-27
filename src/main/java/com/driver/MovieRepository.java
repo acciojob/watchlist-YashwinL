@@ -40,16 +40,28 @@ public class MovieRepository {
 
 
     public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
-        return new ResponseEntity<>(moviesdb.get(name),HttpStatus.OK);
+        if(moviesdb.containsKey(name)){
+            return new ResponseEntity<>(moviesdb.get(name),HttpStatus.OK);
+        }
+        return null;
+
     }
 
     public ResponseEntity<Director> getDirectorByName(@PathVariable String name){
-        return new ResponseEntity<>(directordb.get(name),HttpStatus.OK);
+        if(directordb.containsKey(name)){
+            return new ResponseEntity<>(directordb.get(name),HttpStatus.OK);
+        }
+        return null;
+
     }
 
 
     public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String name){
-        return new ResponseEntity<>(movieAnddirector.get(name),HttpStatus.OK);
+        if(movieAnddirector.containsKey(name)){
+            return new ResponseEntity<>(movieAnddirector.get(name),HttpStatus.OK);
+        }
+        return null;
+
     }
 
 
@@ -62,8 +74,13 @@ public class MovieRepository {
     }
 
     public ResponseEntity<String> deleteDirectorByName(@RequestParam String name){
-        movieAnddirector.remove(name);
-        return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
+        if(movieAnddirector.containsKey(name)){
+            movieAnddirector.remove(name);
+            return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
+        }
+        return null;
+
+
     }
 
 
