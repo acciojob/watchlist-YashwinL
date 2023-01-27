@@ -29,6 +29,9 @@ public class MovieRepository {
 
 
     public ResponseEntity<String> addMovieDirectorPair(@RequestParam String movie,@RequestParam String director){
+        if(!moviesdb.containsKey(movie) && !directordb.containsKey(director)){
+            return new ResponseEntity<>("Movie or Director does not present in database ",HttpStatus.NOT_FOUND);
+        }
         if(!movieAnddirector.containsKey(director)){
             movieAnddirector.put(director,new ArrayList<String>());
             return new ResponseEntity<>("Movie and Director pair created Successfully",HttpStatus.OK);
@@ -74,6 +77,15 @@ public class MovieRepository {
     }
 
     public ResponseEntity<String> deleteDirectorByName(@RequestParam String name){
+        List<String> temp = movieAnddirector.get(name);
+        for(int i=0;i<temp.size();i++){
+            if(moviesdb.containsKey(temp.get(i))){
+                moviesdb.remove(temp.get(i));
+            }
+        }
+        if(directordb.containsKey(name)){
+            directordb.remove(name);
+        }
         if(movieAnddirector.containsKey(name)){
             movieAnddirector.remove(name);
             return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
@@ -85,6 +97,7 @@ public class MovieRepository {
 
 
     public ResponseEntity<String> deleteAllDirectors(){
+        directordb.clear();
         movieAnddirector.clear();
         return new ResponseEntity<>("Cleared All",HttpStatus.OK);
     }
