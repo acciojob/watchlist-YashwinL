@@ -18,17 +18,17 @@ public class MovieRepository {
     HashMap<String, List<String>> movieAnddirector = new HashMap<>();
 
 
-    public ResponseEntity<String> addMovie( Movie movie){
+    public ResponseEntity<String> addMovie(@RequestBody Movie movie){
        moviesdb.put(movie.getName(),movie);
        return new ResponseEntity<>("Movie added Successfully", HttpStatus.OK);
     }
-    public ResponseEntity<String> addDirector(Director director){
+    public ResponseEntity<String> addDirector(@RequestBody Director director){
         directordb.put(director.getName(),director);
         return new ResponseEntity<>("Director added Successfully",HttpStatus.OK);
     }
 
 
-    public ResponseEntity<String> addMovieDirectorPair(String movie, String director){
+    public ResponseEntity<String> addMovieDirectorPair(@RequestParam String movie,@RequestParam String director){
         if(!movieAnddirector.containsKey(director)){
             movieAnddirector.put(director,new ArrayList<String>());
             return new ResponseEntity<>("Movie and Director pair created Successfully",HttpStatus.OK);
@@ -39,16 +39,16 @@ public class MovieRepository {
     }
 
 
-    public ResponseEntity<Movie> getMovieByName( String name){
+    public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
         return new ResponseEntity<>(moviesdb.get(name),HttpStatus.OK);
     }
 
-    public ResponseEntity<Director> getDirectorByName(String name){
+    public ResponseEntity<Director> getDirectorByName(@PathVariable String name){
         return new ResponseEntity<>(directordb.get(name),HttpStatus.OK);
     }
 
 
-    public ResponseEntity<List<String>> getMoviesByDirectorName(String name){
+    public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String name){
         return new ResponseEntity<>(movieAnddirector.get(name),HttpStatus.OK);
     }
 
@@ -61,7 +61,7 @@ public class MovieRepository {
         return new ResponseEntity<>(temp,HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deleteDirectorByName( String name){
+    public ResponseEntity<String> deleteDirectorByName(@RequestParam String name){
         movieAnddirector.remove(name);
         return new ResponseEntity<>("Deleted Successfully",HttpStatus.OK);
     }

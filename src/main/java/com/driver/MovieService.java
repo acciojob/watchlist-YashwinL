@@ -20,32 +20,32 @@ public class MovieService {
     MovieRepository movieRepository;
 
 
-    public ResponseEntity<String> addMovie( Movie movie){
+    public ResponseEntity<String> addMovie(@RequestBody Movie movie){
         return movieRepository.addMovie(movie);
     }
 
 
-    public ResponseEntity<String> addDirector(Director director){
+    public ResponseEntity<String> addDirector(@RequestBody Director director){
         return movieRepository.addDirector(director);
     }
 
 
-    public ResponseEntity<String> addMovieDirectorPair( String movie, String director){
+    public ResponseEntity<String> addMovieDirectorPair(@RequestParam String movie,@RequestParam String director){
        return movieRepository.addMovieDirectorPair(movie,director);
 
     }
 
 
-    public ResponseEntity<Movie> getMovieByName( String name){
+    public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
       return movieRepository.getMovieByName(name);
     }
 
-    public ResponseEntity<Director> getDirectorByName(String name){
+    public ResponseEntity<Director> getDirectorByName(@PathVariable String name){
         return movieRepository.getDirectorByName(name);
     }
 
 
-    public ResponseEntity<List<String>> getMoviesByDirectorName( String name){
+    public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String name){
        return movieRepository.getMoviesByDirectorName(name);
     }
 
@@ -55,7 +55,7 @@ public class MovieService {
     }
 
 
-    public ResponseEntity<String> deleteDirectorByName( String name){
+    public ResponseEntity<String> deleteDirectorByName(@RequestParam String name){
        return movieRepository.deleteDirectorByName(name);
     }
 
