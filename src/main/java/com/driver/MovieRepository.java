@@ -24,56 +24,56 @@ public class MovieRepository {
     }
 
 
-    public ResponseEntity<String> addMovie(@RequestBody Movie movie){
+    public ResponseEntity<String> addMovie( Movie movie){
         if(!moviesdb.containsKey(movie.getName())){
             moviesdb.put(movie.getName(),movie);
         }
 
-       return new ResponseEntity<>("Movie added Successfully", HttpStatus.OK);
+       return new ResponseEntity<>("Movie added Successfully", HttpStatus.CREATED);
     }
-    public ResponseEntity<String> addDirector(@RequestBody Director director){
+    public ResponseEntity<String> addDirector( Director director){
         if(!directordb.containsKey(director.getName())){
             directordb.put(director.getName(),director);
         }
 
-        return new ResponseEntity<>("Director added Successfully",HttpStatus.OK);
+        return new ResponseEntity<>("Director added Successfully",HttpStatus.CREATED);
     }
 
 
-    public ResponseEntity<String> addMovieDirectorPair(@RequestParam String movie,@RequestParam String director){
+    public ResponseEntity<String> addMovieDirectorPair( String movie, String director){
         if(!moviesdb.containsKey(movie) && !directordb.containsKey(director)){
             return new ResponseEntity<>("Movie or Director does not present in database ",HttpStatus.NOT_FOUND);
         }
         if(!movieAnddirector.containsKey(director)){
             movieAnddirector.put(director,new ArrayList<String>());
-            return new ResponseEntity<>("Movie and Director pair created Successfully",HttpStatus.OK);
+            return new ResponseEntity<>("Movie and Director pair created Successfully",HttpStatus.CREATED);
         }
         movieAnddirector.get(director).add(movie);
-        return new ResponseEntity<>("Movie and Director pair added Successfully",HttpStatus.OK);
+        return new ResponseEntity<>("Movie and Director pair added Successfully",HttpStatus.CREATED);
 
     }
 
 
-    public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
+    public ResponseEntity<Movie> getMovieByName( String name){
         if(moviesdb.containsKey(name)){
-            return new ResponseEntity<>(moviesdb.get(name),HttpStatus.OK);
+            return new ResponseEntity<>(moviesdb.get(name),HttpStatus.FOUND);
         }
         return null;
 
     }
 
-    public ResponseEntity<Director> getDirectorByName(@PathVariable String name){
+    public ResponseEntity<Director> getDirectorByName( String name){
         if(directordb.containsKey(name)){
-            return new ResponseEntity<>(directordb.get(name),HttpStatus.OK);
+            return new ResponseEntity<>(directordb.get(name),HttpStatus.FOUND);
         }
         return null;
 
     }
 
 
-    public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String name){
+    public ResponseEntity<List<String>> getMoviesByDirectorName(String name){
         if(movieAnddirector.containsKey(name)){
-            return new ResponseEntity<>(movieAnddirector.get(name),HttpStatus.OK);
+            return new ResponseEntity<>(movieAnddirector.get(name),HttpStatus.FOUND);
         }
         return null;
 
@@ -85,10 +85,10 @@ public class MovieRepository {
         for(String i : moviesdb.keySet()){
             temp.add(i);
         }
-        return new ResponseEntity<>(temp,HttpStatus.OK);
+        return new ResponseEntity<>(temp,HttpStatus.FOUND);
     }
 
-    public ResponseEntity<String> deleteDirectorByName(@RequestParam String name){
+    public ResponseEntity<String> deleteDirectorByName( String name){
         List<String> temp = movieAnddirector.get(name);
         for(int i=0;i<temp.size();i++){
             if(moviesdb.containsKey(temp.get(i))){
